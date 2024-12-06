@@ -1,38 +1,54 @@
-# Neural Graph Collaborative Filtering
-This is my PyTorch implementation for the paper:
+Team Contributions
 
->Xiang Wang, Xiangnan He, Meng Wang, Fuli Feng, and Tat-Seng Chua (2019). Neural Graph Collaborative Filtering, [Paper in ACM DL](https://dl.acm.org/citation.cfm?doid=3331184.3331267) or [Paper in arXiv](https://arxiv.org/abs/1905.08108). In SIGIR'19, Paris, France, July 21-25, 2019.
+Our project is a collaborative effort, with each team member focusing on specific components to improve and extend the baseline NGCF model. Below are the detailed contributions:
 
-The TensorFlow implementation can be found [here](<https://github.com/xiangwang1223/neural_graph_collaborative_filtering>).
+Enis Ozden
 
-## Introduction
-My implementation mainly refers to the original TensorFlow implementation. It has the evaluation metrics as the original project. Here is the example of Gowalla dataset:
+Loss Function Enhancements:
 
-```
-Best Iter=[38]@[32904.5]	recall=[0.15571	0.21793	0.26385	0.30103	0.33170], precision=[0.04763	0.03370	0.02744	0.02359	0.02088], hit=[0.53996	0.64559	0.70464	0.74546	0.77406], ndcg=[0.22752	0.26555	0.29044	0.30926	0.32406]
-```
+Designed and implemented Adaptive Bayesian Personalized Ranking (ABPR), a modified loss mechanism to prioritize harder-to-rank user-item pairs and improve subtle distinctions in ranking quality.
 
-Hope it can help you!
+Integrated hinge loss, introducing margin constraints to separate relevant and irrelevant items more distinctly in the latent space.
 
-## Environment Requirement
-The code has been tested under Python 3.6.9. The required packages are as follows:
-* pytorch == 1.3.1
-* numpy == 1.18.1
-* scipy == 1.3.2
-* sklearn == 0.21.3
+Conducted extensive experiments to compare these loss mechanisms with the baseline Bayesian Personalized Ranking (BPR) loss, analyzing their impact on metrics such as Recall@K, Precision@K, and NDCG@K.
 
-## Example to Run the Codes
-The instruction of commands has been clearly stated in the codes (see the parser function in NGCF/utility/parser.py).
-* Gowalla dataset
-```
-python main.py --dataset gowalla --regs [1e-5] --embed_size 64 --layer_size [64,64,64] --lr 0.0001 --save_flag 1 --pretrain 0 --batch_size 1024 --epoch 400 --verbose 1 --node_dropout [0.1] --mess_dropout [0.1,0.1,0.1]
-```
 
-* Amazon-book dataset
-```
-python main.py --dataset amazon-book --regs [1e-5] --embed_size 64 --layer_size [64,64,64] --lr 0.0005 --save_flag 1 --pretrain 0 --batch_size 1024 --epoch 200 --verbose 50 --node_dropout [0.1] --mess_dropout [0.1,0.1,0.1]
-```
-## Supplement
+Optimization and Tuning:
 
-* The parameter `negative_slope` of LeakyReLu was set to 0.2, since the default value of PyTorch and TensorFlow is different.
-* If the arguement `node_dropout_flag` is set to 1, it will lead to higher calculational cost.
+Optimized the hyperparameters of the loss mechanisms to ensure robust training and better performance on sparse datasets like Gowalla.
+
+Debugged issues related to loss function stability during the training phase and refined the implementation for compatibility with the NGCF framework.
+
+
+Documentation and Analysis:
+
+Authored detailed sections of the methodology and results analysis in the report, focusing on the impact of enhanced loss mechanisms.
+
+
+
+Teoman Kaman
+
+Regularization Techniques:
+
+Researched, implemented, and integrated Layer Normalization into the NGCF pipeline to stabilize the training process and maintain consistent embedding distributions across layers.
+
+Experimented with DropEdge, a graph regularization technique, to reduce graph complexity during training, ensuring better generalization and computational efficiency.
+
+
+Efficiency Improvements:
+
+Focused on reducing computational overhead by tuning regularization methods, enabling the model to achieve high performance with fewer compute units and reduced training time.
+
+Evaluated the trade-offs between computational cost and recommendation quality for real-world applicability.
+
+
+Experimental Pipeline:
+
+Managed the training pipeline, ensuring compatibility between loss mechanisms and regularization techniques.
+
+Verified performance consistency by running multiple trials with fixed seeds to confirm results.
+
+
+Reporting and Presentation:
+
+Authored key sections of the report related to experimental setup, findings on regularization techniques, and their implications for large-scale deployments.
